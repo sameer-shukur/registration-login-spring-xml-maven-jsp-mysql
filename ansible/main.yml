@@ -1,0 +1,44 @@
+---
+- hosts: all
+  tasks:
+
+    - name: Make sure that we can connect to the machine
+      ping:
+
+    - name: Install add-apt-repostory
+      become: yes
+      apt: name=software-properties-common state=latest
+
+    - name: Install Java
+      command: apt install default-jdk -y
+      become: true
+
+    - name: Download file from a file path
+      get_url:
+        url: http://apachemirror.wuchna.com/tomcat/tomcat-7/v7.0.94/bin/apache-tomcat-7.0.94.tar.gz
+        dest: /home/ubuntu/
+
+    - name: add group "tomcat"
+      group: name=tomcat
+      become: true
+
+    - name: add user "tomcat"
+      user: name=tomcat group=tomcat createhome=yes
+      become: true
+
+    - name: copy Tomcat
+      copy: src=./apache-tomcat-7.0.94.tar.gz dest=/opt/apache-tomcat-7.0.94.tar.gz remote_src=yes
+      become: true
+
+    - name: Extract Tomcat archive
+      command: tar zxvf /opt/apache-tomcat-7.0.94.tar.gz -C /opt/ creates=/opt/apache-tomcat-7.0.94
+      become: true
+
+    - name: Change ownership of Tomcat installation
+      file: path=/opt/apache-tomcat-7.0.94 owner=tomcat group=tomcat state=directory recurse=yes
+      become: true
+
+    - name: Start Tomcat
+      command: nohup /opt/apache-tomcat-7.0.94/bin/startup.sh
+      become: true
+      become_user: tomcat

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-form-deploy-app
+  labels:
+    app: app-registration
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: app-registration
+  type: LoadBalancer

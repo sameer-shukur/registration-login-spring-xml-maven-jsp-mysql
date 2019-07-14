@@ -1,0 +1,57 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: registration-form-deploy-app
+  namespace: default
+  labels:
+    app: app-registration
+spec:
+        #  replicas: 3
+        #  strategy:
+        #    type: RollingUpdate
+        #    rollingUpdate: 
+        #      maxSurge: 2
+        #      maxUnavailable: 1
+        #  revisionHistoryLimit: 4
+        #  paused: false
+        #  minReadySeconds: 30
+  selector:
+    matchLabels:
+      app: app-registration
+      #  strategy:
+      #    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: app-registration
+    spec:
+      containers:
+      - name: app-registration	
+        image: sameershukur/registration-form:v2.0
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        env:
+        - name: JDBCURL
+          value: "database-service"
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "example"
+        ports:
+        - containerPort: 8080
+          protocol: TCP 
+          #        resources:
+          #          requests:
+          #            memory: "700Mi"
+          #            cpu: "100m"
+          #          limits:
+          #            memory: "1500Mi"
+          #            cpu: "200m"
