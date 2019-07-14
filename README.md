@@ -1,4 +1,6 @@
-# Registration and Login Example with Spring MVC, Spring Security, Spring Data JPA, XML Configuration, Maven, JSP, and MySQL.
+# Registration and Login Example with Spring MVC, Spring Security, Spring Data JPA, XML Configuration, Maven, JSP, MYSQL. 
+# Infrastructure automation using:
+Ansible for installing application dependencies, Terraform to provision instance in AWS, Docker and Docker compose to containerize the application and Kubernetes to manage the cluster setup.
 
 ## Guide
 https://hellokoding.com/registration-and-login-example-with-spring-xml-configuration-maven-jsp-and-mysql/
