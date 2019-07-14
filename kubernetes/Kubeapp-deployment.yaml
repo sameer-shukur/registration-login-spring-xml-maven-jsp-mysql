@@ -40,11 +40,20 @@ spec:
           periodSeconds: 30
         env:
         - name: JDBCURL
-          value: "database-service"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: JDBCURL
         - name: MYSQL_USER
-          value: "root"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: MYSQL_USER
         - name: MYSQL_ROOT_PASSWORD
-          value: "example"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: MYSQL_ROOT_PASSWORD
         ports:
         - containerPort: 8080
           protocol: TCP 
