@@ -14,7 +14,9 @@ node(label: 'master'){
     def snapshotRepo = "libs-snapshot-local"
     def variable = credentials("tomcat")
 	def dockerRegistry = "https://registry.hub.docker.com"
-	def dockerCredentialID = "dockerID" 
+	def dockerRegistryUserName = "sameershukur"
+	def dockerCredentialID = "dockerID"
+	def dockerImageName = "${dockerRegistryUserName}/${applicationName}"
     def lastSuccessfulBuildID = 0
     try {
         
@@ -62,6 +64,7 @@ node(label: 'master'){
     stage('Build Docker image and Push'){
         dockerBuildAndPush "${dockerRegistry}","${dockerCredentialID}","${dockerImageName}"
     }
+    
     //Kubedeploy
     stage('Kubernetes deploy- PROD')
         {
@@ -76,7 +79,6 @@ node(label: 'master'){
             sh "sleep 15"
             sh "kubectl get pods"
         }
-    
 }
 catch(err)
 	{
