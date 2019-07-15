@@ -62,6 +62,20 @@ node(label: 'master'){
     stage('Build Docker image and Push'){
         dockerBuildAndPush "${dockerRegistry}","${dockerCredentialID}","${dockerImageName}"
     }
+    //Kubedeploy
+    stage('Kubernetes deploy- PROD')
+        {
+            input "Do you wish to proceed with Kubernetes deployment for PROD?"
+            sh "sed -i 's/:${lastSuccessfulBuildID}/:${BUILD_NUMBER}/g'   ../../kubernetes/Kubeapp-deployment.yaml"
+            sh "kubectl apply -f /var/lib/jenkins/kubernetes/Kubeapp-deployment.yaml"
+        }
+        
+    //Ensure pods & services are running
+    stage('Ensure pods are running')
+        {
+            sh "sleep 15"
+            sh "kubectl get pods"
+        }
     
 }
 catch(err)
