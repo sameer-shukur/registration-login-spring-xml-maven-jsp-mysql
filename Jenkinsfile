@@ -1,7 +1,7 @@
 @Library('shared-library')_
 node(label: 'master'){
     //Variables
-    def gitURL = "https://github.com/sameer-shukur/registration-login-spring-xml-maven-jsp-mysql.git"
+    def gitURL = "git@github.com:sameer-shukur/registration-login-spring-xml-maven-jsp-mysql.git"
     def repoBranch = "master"
     def applicationName = "registration-form"
     def sonarqubeServer = "sonar"
