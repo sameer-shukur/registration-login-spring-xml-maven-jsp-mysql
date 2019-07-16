@@ -38,7 +38,7 @@ node(label: 'master'){
     
     //Sonarqube Analysis
     stage('Sonarqube-scan'){
-        sonarqubeScan "{mvnHome}","${sonarqubeGoal}","${pom}", "${sonarqubeServer}"
+        sonarqubeScan "${mvnHome}","${sonarqubeGoal}","${pom}", "${sonarqubeServer}"
     }
     
     //Quality-gate
